@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Capitalization Converter</title>
+</head>
+<body>
+
+  <label for="textInput">Enter Text:</label>
+  <textarea id="textInput" rows="4" cols="50"></textarea>
+
+  <br>
+
+  <button onclick="convertText()">Convert</button>
+
+  <h3>Converted Text:</h3>
+  <div id="convertedText"></div>
+
+  <button onclick="copyToClipboard()">Copy</button>
+
+  <script>
+    function convertText() {
+      // Get the input text from the textarea
+      let inputText = document.getElementById("textInput").value;
+
+      // Capitalize the first letter of each word (handling Turkish characters)
+      let capitalizedText = inputText.split(' ').map(word => {
+        let firstLetter = word.charAt(0).toLocaleUpperCase('tr-TR');
+        let restOfWord = word.slice(1).toLocaleLowerCase('tr-TR');
+        return firstLetter + restOfWord;
+      }).join(' ');
+
+      // Display the converted text
+      document.getElementById("convertedText").innerText = capitalizedText;
+    }
+
+    function copyToClipboard() {
+      // Get the converted text
+      let convertedText = document.getElementById("convertedText").innerText;
+
+      // Create a temporary textarea to copy the text
+      let tempTextarea = document.createElement("textarea");
+      tempTextarea.value = convertedText;
+      document.body.appendChild(tempTextarea);
+
+      // Select the text and copy it to the clipboard
+      tempTextarea.select();
+      document.execCommand("copy");
+
+      // Remove the temporary textarea
+      document.body.removeChild(tempTextarea);
+    }
+  </script>
+
+</body>
+</html>
